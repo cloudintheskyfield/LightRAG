@@ -707,6 +707,7 @@ class DocProcessingStatus:
     """Error message if failed"""
     metadata: dict[str, Any] = field(default_factory=dict)
     """Additional metadata"""
+    multimodal_processed: bool = False
 
 
 @dataclass
