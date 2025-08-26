@@ -24,7 +24,7 @@ from .shared_storage import (
 )
 
 
-@final
+@final  # 不能继承或重写
 @dataclass
 class JsonDocStatusStorage(DocStatusStorage):
     """JSON implementation of document status storage"""
