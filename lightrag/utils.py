@@ -602,7 +602,7 @@ def priority_limit_async_func_call(max_size: int, max_queue_size: int = 1000):
                     return await future
             finally:
                 # Clean up the future reference
-                active_futures.discard(future)
+                active_futures.discard(future)  # 弱引用集合去除obj
 
         # Add the shutdown method to the decorated function
         wait_func.shutdown = shutdown

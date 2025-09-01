@@ -66,7 +66,7 @@ async def _ollama_model_if_cache(
         "top_p": 1,
     }
     headers = {"Content-Type": "application/json"}
-    resp = requests.post(llm_api_url, json=payload, headers=headers, timeout=60, proxies={'http': '', 'https': ''})
+    resp = requests.post(llm_api_url, json=payload, headers=headers)
     resp.raise_for_status()
     data = resp.json()
     # 兼容常见返回格式
