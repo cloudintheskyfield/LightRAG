@@ -34,6 +34,7 @@ import { useBackendState } from '@/stores/state'
 
 import { RefreshCwIcon, ActivityIcon, ArrowUpIcon, ArrowDownIcon, RotateCcwIcon, CheckSquareIcon, XIcon } from 'lucide-react'
 import PipelineStatusDialog from '@/components/documents/PipelineStatusDialog'
+import Progress from '@/components/ui/Progress'
 
 type StatusFilter = DocStatus | 'all';
 
@@ -837,6 +838,23 @@ export default function DocumentManager() {
         <CardTitle className="text-lg">{t('documentPanel.documentManager.title')}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col min-h-0 overflow-auto">
+        {(() => {
+          const processing = statusCounts.PROCESSING || statusCounts.processing || 0
+          const pending = statusCounts.PENDING || statusCounts.pending || 0
+          const processed = statusCounts.PROCESSED || statusCounts.processed || 0
+          const failed = statusCounts.FAILED || statusCounts.failed || 0
+          const total = processed + processing + pending + failed
+          if (total === 0 || (processing === 0 && pending === 0)) return null
+          const percent = Math.round((processed / total) * 100)
+          return (
+            <div className="mb-2 flex items-center gap-2">
+              <Progress value={percent} className="h-2 flex-1" />
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                {processed}/{total} ({percent}%)
+              </span>
+            </div>
+          )
+        })()}
         <div className="flex justify-between items-center gap-2 mb-2">
           <div className="flex gap-2">
             <Button
